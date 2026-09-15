@@ -68,10 +68,10 @@ describe("anilistMedia", () => {
   it("POSTs the GraphQL query with variables", async () => {
     const fetchMock = mockFetch({ data: { Page: { media: [] } } })
     await anilistMedia("SCORE_DESC", { type: "ANIME", genres: ["Action"], formats: ["TV"] })
-    const [url, init] = fetchMock.mock.calls[0]
+    const [url, init] = (fetchMock as ReturnType<typeof vi.fn>).mock.calls[0] as [string, RequestInit]
     expect(url).toBe("https://graphql.anilist.co")
     expect(init.method).toBe("POST")
-    const body = JSON.parse(init.body)
+    const body = JSON.parse(init.body as string)
     expect(body.query).toContain("genre_in: $genres")
     expect(body.variables).toEqual({
       page: 1, perPage: 20, type: "ANIME", sort: ["SCORE_DESC"],
