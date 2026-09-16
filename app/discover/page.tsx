@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { Header } from "@/components/layout/Header"
 import { ProgressBar } from "@/components/layout/ProgressBar"
 import { BackButton } from "@/components/layout/BackButton"
@@ -12,9 +12,13 @@ function DiscoverContent() {
   const router = useRouter()
   const params = useSearchParams()
   const type = params.get("type") as MediaType | null
+  const valid = !!type && MEDIA_TYPES.includes(type as MediaType)
 
-  if (!type || !MEDIA_TYPES.includes(type as MediaType)) {
-    router.replace("/")
+  useEffect(() => {
+    if (!valid) router.replace("/")
+  }, [valid, router])
+
+  if (!valid) {
     return null
   }
 
