@@ -35,3 +35,11 @@ export const ACCENT_GLOW: Record<MediaType, string> = {
   manga: "shadow-[0_0_24px_rgba(16,185,129,0.25)]",
   book: "shadow-[0_0_24px_rgba(139,92,246,0.25)]",
 }
+
+/** Hover style: accent border + accent glow. Literal strings so Tailwind's scanner sees them. */
+export const ACCENT_HOVER: Record<MediaType, string> = {
+  movie: "hover:border-accent-movie hover:shadow-[0_0_24px_rgba(99,102,241,0.25)]",
+  anime: "hover:border-accent-anime hover:shadow-[0_0_24px_rgba(245,158,11,0.25)]",
+  manga: "hover:border-accent-manga hover:shadow-[0_0_24px_rgba(16,185,129,0.25)]",
+  book: "hover:border-accent-book hover:shadow-[0_0_24px_rgba(139,92,246,0.25)]",
+}
