@@ -43,6 +43,9 @@ export async function GET(request: Request) {
       case "more":
         return NextResponse.json(await anilistMedia("POPULARITY_DESC", opts))
       case "details":
+        if (!Number.isInteger(id) || id <= 0) {
+          return NextResponse.json({ error: "Missing or invalid id" }, { status: 400 })
+        }
         return NextResponse.json(await getAniListDetails(id, type))
       case "search":
         return NextResponse.json(await searchAniList(q ?? "", type))

@@ -30,6 +30,12 @@ describe("GET /api/tmdb", () => {
     expect(calledUrl).toContain("with_genres=28")
   })
 
+  it("returns 400 for details without an id", async () => {
+    const res = await tmdbGET(makeRequest("/api/tmdb?section=details"))
+    expect(res.status).toBe(400)
+    expect(await res.json()).toEqual({ error: "Missing or invalid id" })
+  })
+
   it("returns 502 when the upstream lib throws", async () => {
     process.env.TMDB_API_KEY = "test-key"
     vi.stubGlobal("fetch", vi.fn(async () => new Response("nope", { status: 500 })))

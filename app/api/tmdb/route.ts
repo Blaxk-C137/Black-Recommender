@@ -23,8 +23,14 @@ export async function GET(request: Request) {
       case "more":
         return NextResponse.json(await getMoreByGenre(kind, genreIds, page))
       case "details":
+        if (!Number.isInteger(id) || id <= 0) {
+          return NextResponse.json({ error: "Missing or invalid id" }, { status: 400 })
+        }
         return NextResponse.json(await getTmdbDetails(kind, id))
       case "trailer":
+        if (!Number.isInteger(id) || id <= 0) {
+          return NextResponse.json({ error: "Missing or invalid id" }, { status: 400 })
+        }
         return NextResponse.json({ url: await getTrailerUrl(kind, id) })
       default:
         return NextResponse.json({ error: `Unknown section: ${section}` }, { status: 400 })
