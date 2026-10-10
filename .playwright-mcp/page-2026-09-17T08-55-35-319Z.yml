@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e4]:
+      - link "Luminary" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - generic "Step 1 of 4" [ref=e7]:
+        - paragraph [ref=e16]: What do you want?
+    - generic [ref=e17]:
+      - heading "What are you in the mood for?" [level=1] [ref=e18]
+      - paragraph [ref=e19]: One question at a time. No overwhelm. Just discovery.
+      - generic [ref=e20]:
+        - button "Movie" [ref=e21]:
+          - generic [aria-hidden] [ref=e22]: 🎬
+        - button "Anime" [ref=e24]:
+          - generic [aria-hidden] [ref=e25]: 📺
+        - button "Manga" [ref=e27]:
+          - generic [aria-hidden] [ref=e28]: 📚
+        - button "Book" [ref=e30]:
+          - generic [aria-hidden] [ref=e31]: 📖
+  - alert [ref=e33]

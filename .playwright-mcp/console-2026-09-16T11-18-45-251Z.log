@@ -1,0 +1,8 @@
+[     740ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/2ba31_next_dist_compiled_react-dom_8052de92._.js:14537
+[   30858ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/2ba31_next_dist_client_fb484c5d._.js:5956
+[   31305ms] [LOG] [Fast Refresh] done in 547ms @ http://localhost:3000/_next/static/chunks/2ba31_next_dist_client_fb484c5d._.js:5816
+[   31411ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/2ba31_next_dist_client_fb484c5d._.js:5956
+[   31513ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/discover/results?type=movie&sub=movie&genres=Action%2CSci-Fi&_rsc=Z3E-InRJP45yX3sQ:0
+[   31525ms] [LOG] [Fast Refresh] done in 213ms @ http://localhost:3000/_next/static/chunks/2ba31_next_dist_client_fb484c5d._.js:5816
+[   31853ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/discover/results?type=movie&sub=movie&genres=Action%2CSci-Fi:0
+[   32192ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/2ba31_next_dist_compiled_react-dom_8052de92._.js:14537

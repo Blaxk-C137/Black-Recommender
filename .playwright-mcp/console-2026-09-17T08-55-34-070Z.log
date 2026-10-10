@@ -1,0 +1,2 @@
+[   21170ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3000/discover/results?type=anime&sub=tv&genres=Comedy%2CDrama%2CFantasy%2CSci-Fi&_rsc=Z3E-InRJP45yX3sQ:0
+[   21207ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3000/discover/results?type=anime&sub=tv&genres=Comedy%2CDrama%2CFantasy%2CSci-Fi:0

@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { GenreChip } from "./GenreChip"
 import type { GenreGroup } from "@/lib/utils/constants"
 
@@ -23,17 +24,26 @@ export function GenreGrid({
               {group.label}
             </h2>
           )}
-          <div className="flex flex-wrap gap-2 md:gap-3">
+          <motion.div
+            className="flex flex-wrap gap-2 md:gap-3"
+            initial="hidden"
+            animate="show"
+            variants={{ show: { transition: { staggerChildren: 0.04 } } }}
+          >
             {group.genres.map(genre => (
-              <GenreChip
+              <motion.div
                 key={genre}
-                label={genre}
-                selected={selected.includes(genre)}
-                accentSelected={accentSelected}
-                onToggle={() => onToggle(genre)}
-              />
+                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+              >
+                <GenreChip
+                  label={genre}
+                  selected={selected.includes(genre)}
+                  accentSelected={accentSelected}
+                  onToggle={() => onToggle(genre)}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
       ))}
     </div>

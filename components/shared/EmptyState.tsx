@@ -1,3 +1,4 @@
+
 import { SearchX } from "lucide-react"
 
 export function EmptyState({ message = "Nothing found." }: { message?: string }) {

@@ -1,3 +1,4 @@
+
 export function normalizeRating(score: number | null | undefined, scale: 10 | 100 = 10): number {
   if (score == null) return 0
   const value = scale === 100 ? score / 10 : score

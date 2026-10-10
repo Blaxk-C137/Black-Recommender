@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import type { MediaType } from "@/lib/utils/constants"
 import { ACCENT_HOVER, ACCENT_TEXT } from "@/lib/utils/accent"
@@ -16,11 +17,13 @@ export function MediaTypeCard({
   onClick: () => void
 }) {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
       onClick={onClick}
       className={cn(
         "flex min-h-[180px] w-full flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card p-6",
-        "transition-transform duration-200 hover:scale-[1.03]",
         ACCENT_HOVER[type]
       )}
       aria-label={label}
@@ -31,6 +34,6 @@ export function MediaTypeCard({
       <span className={cn("font-display text-2xl font-semibold", ACCENT_TEXT[type])}>
         {label}
       </span>
-    </button>
+    </motion.button>
   )
 }

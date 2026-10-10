@@ -1,3 +1,4 @@
+
 ```md
 # CLAUDE.md — Multi-Media Discovery App: Complete Build Plan
 

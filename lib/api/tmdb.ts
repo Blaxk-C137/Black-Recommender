@@ -1,3 +1,4 @@
+
 import type { MediaItem } from "@/lib/types/media.types"
 
 const BASE_URL = process.env.TMDB_BASE_URL ?? "https://api.themoviedb.org/3"

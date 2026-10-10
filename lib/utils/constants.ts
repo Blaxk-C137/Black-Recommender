@@ -1,3 +1,4 @@
+
 export const MEDIA_TYPES = ["movie", "anime", "manga", "book"] as const
 export type MediaType = (typeof MEDIA_TYPES)[number]
 

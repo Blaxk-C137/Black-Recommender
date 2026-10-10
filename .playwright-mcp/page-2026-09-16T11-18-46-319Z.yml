@@ -1,0 +1,25 @@
+- main [ref=e2]:
+  - generic [ref=e4]:
+    - link "Luminary" [ref=e6] [cursor=pointer]:
+      - /url: /
+    - generic "Step 3 of 4" [ref=e7]:
+      - paragraph [ref=e16]: Pick your vibe
+  - generic [ref=e17]:
+    - button "Back" [ref=e18]
+    - heading "Pick your vibe" [level=1] [ref=e19]
+    - paragraph [ref=e20]: For Movie — pick as many as you like.
+    - generic [ref=e23]:
+      - button "Action" [ref=e24]
+      - button "Animation" [ref=e26]
+      - button "Comedy" [ref=e28]
+      - button "Crime" [ref=e30]
+      - button "Documentary" [ref=e32]
+      - button "Drama" [ref=e34]
+      - button "Fantasy" [ref=e36]
+      - button "Historical" [ref=e38]
+      - button "Horror" [ref=e40]
+      - button "Mystery" [ref=e42]
+      - button "Romance" [ref=e44]
+      - button "Sci-Fi" [ref=e46]
+      - button "Thriller" [ref=e48]
+    - button "Find It" [disabled]

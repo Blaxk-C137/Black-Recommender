@@ -1,3 +1,4 @@
+
 import { NextResponse } from "next/server"
 import {
   anilistMedia, getAniListDetails, searchAniList, type AniListType,
