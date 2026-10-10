@@ -37,6 +37,14 @@ export const ACCENT_GLOW: Record<MediaType, string> = {
   book: "shadow-[0_0_24px_rgba(139,92,246,0.25)]",
 }
 
+/** Mouse spotlight tint per media type (rgba, translucent). */
+export const ACCENT_SPOTLIGHT: Record<MediaType, string> = {
+  movie: "rgba(99,102,241,0.22)",
+  anime: "rgba(245,158,11,0.20)",
+  manga: "rgba(16,185,129,0.20)",
+  book: "rgba(139,92,246,0.22)",
+}
+
 /** Hover style: accent border + accent glow. Literal strings so Tailwind's scanner sees them. */
 export const ACCENT_HOVER: Record<MediaType, string> = {
   movie: "hover:border-accent-movie hover:shadow-[0_0_24px_rgba(99,102,241,0.25)]",

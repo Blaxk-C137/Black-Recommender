@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
 import { Header } from "@/components/layout/Header"
@@ -16,18 +15,13 @@ import { Button } from "@/components/ui/button"
 import { EmptyState } from "@/components/shared/EmptyState"
 import { ErrorState } from "@/components/shared/ErrorState"
 import { GridSkeleton, MediaRowSkeleton } from "@/components/shared/LoadingSkeleton"
+import { BlurFade } from "@/components/magicui/blur-fade"
 import { useSection } from "@/hooks/useSection"
 import { useUIStore } from "@/lib/store/useUIStore"
 import type { MediaItem } from "@/lib/types/media.types"
 import { MEDIA_TYPES, SUBTYPES, type MediaType } from "@/lib/utils/constants"
 import { parseGenresParam } from "@/lib/utils/formatters"
 import { SECTION_TITLES, sectionsFor, type SectionId } from "@/lib/utils/sections"
-
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.4 },
-}
 
 function SectionRow({ section }: { section: Exclude<SectionId, "more"> }) {
   const setSelected = useUIStore(s => s.setSelectedItem)
@@ -95,12 +89,15 @@ function MorePage({ page, isFirst }: { page: number; isFirst: boolean }) {
   }
   return (
     <>
-      {(data ?? []).map((item: MediaItem) => (
-        <MediaCard
+      {(data ?? []).map((item: MediaItem, i: number) => (
+        <BlurFade
           key={`${item.source}-${item.id}`}
-          item={item}
-          onClick={() => setSelected(item)}
-        />
+          inView
+          delay={Math.min(i * 0.05, 0.5)}
+          yOffset={18}
+        >
+          <MediaCard item={item} onClick={() => setSelected(item)} />
+        </BlurFade>
       ))}
     </>
   )
@@ -140,23 +137,29 @@ function ResultsContent() {
         <ProgressBar currentStep={4} />
       </Header>
       <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
-        <BackButton />
-        <ResultsHeader type={mediaType} sub={sub as string} genres={genres} />
-        <div className="space-y-12">
-          {rowSections.map(section => (
-            <motion.section key={section} {...fadeUp}>
+        <BlurFade delay={0.02} className="w-full">
+          <BackButton />
+        </BlurFade>
+        <BlurFade delay={0.08} yOffset={16}>
+          <ResultsHeader type={mediaType} sub={sub as string} genres={genres} />
+        </BlurFade>
+        <div className="space-y-14">
+          {rowSections.map((section, i) => (
+            <section key={section}>
               <SectionTitle>{SECTION_TITLES[section]}</SectionTitle>
-              <SectionRow section={section} />
-            </motion.section>
+              <BlurFade inView delay={i * 0.05} yOffset={24}>
+                <SectionRow section={section} />
+              </BlurFade>
+            </section>
           ))}
-          <motion.section {...fadeUp}>
+          <section>
             <SectionTitle>🤖 AI Pick</SectionTitle>
             <AIPickCard />
-          </motion.section>
-          <motion.section {...fadeUp}>
+          </section>
+          <section>
             <SectionTitle>{SECTION_TITLES.more}</SectionTitle>
             <MoreGrid />
-          </motion.section>
+          </section>
         </div>
       </div>
       <DetailModal />

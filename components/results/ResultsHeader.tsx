@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import Link from "next/link"
 import { Pencil } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -22,16 +23,17 @@ export function ResultsHeader({
     <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-wrap items-center gap-2">
         <span className="mr-1 text-sm text-muted-foreground">You picked:</span>
-        <Badge variant="secondary" className="h-7 px-3 text-sm">
-          {MEDIA_LABELS[type]}
-        </Badge>
-        <Badge variant="secondary" className="h-7 px-3 text-sm">
-          {subLabel}
-        </Badge>
-        {genres.map(g => (
-          <Badge key={g} variant="outline" className="h-7 px-3 text-sm">
-            {g}
-          </Badge>
+        {[MEDIA_LABELS[type], subLabel, ...genres].map((chip, i) => (
+          <motion.span
+            key={`${chip}-${i}`}
+            initial={{ opacity: 0, scale: 0.8, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.1 + i * 0.07, type: "spring", stiffness: 400, damping: 22 }}
+          >
+            <Badge variant={i < 2 ? "secondary" : "outline"} className="h-7 px-3 text-sm">
+              {chip}
+            </Badge>
+          </motion.span>
         ))}
       </div>
       <Link

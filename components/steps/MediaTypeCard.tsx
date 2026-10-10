@@ -3,7 +3,8 @@
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import type { MediaType } from "@/lib/utils/constants"
-import { ACCENT_HOVER, ACCENT_TEXT } from "@/lib/utils/accent"
+import { ACCENT_HOVER, ACCENT_SPOTLIGHT, ACCENT_TEXT } from "@/lib/utils/accent"
+import { SpotlightCard } from "@/components/magicui/spotlight-card"
 
 export function MediaTypeCard({
   type,
@@ -17,23 +18,41 @@ export function MediaTypeCard({
   onClick: () => void
 }) {
   return (
-    <motion.button
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      onClick={onClick}
-      className={cn(
-        "flex min-h-[180px] w-full flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card p-6",
-        ACCENT_HOVER[type]
-      )}
-      aria-label={label}
+    <motion.div
+      whileHover={{ scale: 1.04, y: -4 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: "spring", stiffness: 320, damping: 24 }}
+      className="h-full"
     >
-      <span className="text-5xl" aria-hidden>
-        {emoji}
-      </span>
-      <span className={cn("font-display text-2xl font-semibold", ACCENT_TEXT[type])}>
-        {label}
-      </span>
-    </motion.button>
+      <SpotlightCard
+        spotlightColor={ACCENT_SPOTLIGHT[type]}
+        onClick={onClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            onClick()
+          }
+        }}
+        aria-label={label}
+        className={cn(
+          "group flex min-h-[180px] w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card p-6 transition-colors",
+          ACCENT_HOVER[type]
+        )}
+      >
+        <motion.span
+          aria-hidden
+          className="text-5xl"
+          whileHover={{ rotate: [0, -8, 8, -4, 0], scale: 1.15 }}
+          transition={{ duration: 0.5 }}
+        >
+          {emoji}
+        </motion.span>
+        <span className={cn("font-display text-2xl font-semibold", ACCENT_TEXT[type])}>
+          {label}
+        </span>
+      </SpotlightCard>
+    </motion.div>
   )
 }

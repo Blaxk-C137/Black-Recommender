@@ -1,8 +1,9 @@
-
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { Providers } from "./providers"
+import { SmoothScroll } from "@/components/providers/smooth-scroll"
+import { ScrollProgress } from "@/components/magicui/scroll-progress"
 
 const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"] })
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] })
@@ -20,7 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${playfair.variable} ${inter.variable} ${jetbrains.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <SmoothScroll>
+            <ScrollProgress />
+            <div className="noise-overlay" aria-hidden />
+            {children}
+          </SmoothScroll>
+        </Providers>
       </body>
     </html>
   )
