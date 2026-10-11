@@ -96,7 +96,7 @@ function MorePage({ page, isFirst }: { page: number; isFirst: boolean }) {
           delay={Math.min(i * 0.05, 0.5)}
           yOffset={18}
         >
-          <MediaCard item={item} onClick={() => setSelected(item)} />
+          <MediaCard item={item} className="w-full md:w-full" onClick={() => setSelected(item)} />
         </BlurFade>
       ))}
     </>

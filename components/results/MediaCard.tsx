@@ -2,9 +2,26 @@
 
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { cn } from "@/lib/utils"
 import type { MediaItem } from "@/lib/types/media.types"
 
-export function MediaCard({ item, onClick }: { item: MediaItem; onClick?: () => void }) {
+const WIDTHS = {
+  sm: "w-[120px]",
+  md: "w-[140px] md:w-[200px]",
+} as const
+
+export function MediaCard({
+  item,
+  onClick,
+  size = "md",
+  className,
+}: {
+  item: MediaItem
+  onClick?: () => void
+  size?: "sm" | "md"
+  /** Extra classes — e.g. "w-full" makes the card fill its grid column. */
+  className?: string
+}) {
   const [imgError, setImgError] = useState(false)
   const showPoster = item.posterUrl && !imgError
 
@@ -14,7 +31,7 @@ export function MediaCard({ item, onClick }: { item: MediaItem; onClick?: () => 
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 320, damping: 24 }}
-      className="group w-[140px] shrink-0 text-left md:w-[200px]"
+      className={cn("group shrink-0 text-left", WIDTHS[size], className)}
       aria-label={item.title}
     >
       <div className="shine-sweep relative aspect-[2/3] overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:border-white/20 group-hover:shadow-[0_12px_40px_-8px_rgba(139,92,246,0.4)]">

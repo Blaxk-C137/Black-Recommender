@@ -67,6 +67,30 @@ describe("getBestRated", () => {
     expect(url).toContain("sort_by=vote_average.desc")
     expect(url).toContain("vote_count.gte=300")
     expect(url).toContain("page=2")
+    expect(url).toContain("primary_release_date.gte=2008-01-01")
+  })
+
+  it("tv uses first_air_date recency filter", async () => {
+    const fetchMock = mockFetch({ results: [] })
+    process.env.TMDB_API_KEY = "test-key"
+    await getBestRated("tv", [18], 1)
+    const url = (fetchMock as ReturnType<typeof vi.fn>).mock.calls[0][0] as string
+    expect(url).toContain("/discover/tv")
+    expect(url).toContain("first_air_date.gte=2008-01-01")
+  })
+
+  it("trending drops items older than 2008", async () => {
+    mockFetch({
+      results: [
+        { id: 1, title: "Old", release_date: "1995-01-01" },
+        { id: 2, title: "New", release_date: "2020-01-01" },
+        { id: 3, title: "Unknown" },
+      ],
+    })
+    process.env.TMDB_API_KEY = "test-key"
+    const { getTrending } = await import("./tmdb")
+    const items = await getTrending("movie")
+    expect(items.map(i => i.title)).toEqual(["New", "Unknown"])
   })
 
   it("throws a clear error when TMDB_API_KEY is missing", async () => {

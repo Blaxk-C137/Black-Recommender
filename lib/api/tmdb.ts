@@ -1,8 +1,11 @@
 
 import type { MediaItem } from "@/lib/types/media.types"
+import { MIN_YEAR } from "@/lib/utils/constants"
+import { filterByMinYear } from "@/lib/utils/formatters"
 
 const BASE_URL = process.env.TMDB_BASE_URL ?? "https://api.themoviedb.org/3"
 const IMG_BASE = "https://image.tmdb.org/t/p/w500"
+const DATE_MIN = `${MIN_YEAR}-01-01`
 
 export type TmdbKind = "movie" | "tv"
 
@@ -84,6 +87,13 @@ export function mapTmdbItem(r: TmdbResult, kind: TmdbKind): MediaItem {
   }
 }
 
+/** Discover param that excludes anything released before MIN_YEAR. */
+function recencyParam(kind: TmdbKind): Record<string, string> {
+  return kind === "movie"
+    ? { "primary_release_date.gte": DATE_MIN }
+    : { "first_air_date.gte": DATE_MIN }
+}
+
 export async function getBestRated(
   kind: TmdbKind,
   genreIds: number[],
@@ -95,6 +105,7 @@ export async function getBestRated(
     "vote_count.gte": 300,
     include_adult: false,
     page,
+    ...recencyParam(kind),
   })
   return data.results.map(r => mapTmdbItem(r, kind))
 }
@@ -109,13 +120,15 @@ export async function getMoreByGenre(
     sort_by: "popularity.desc",
     include_adult: false,
     page,
+    ...recencyParam(kind),
   })
   return data.results.map(r => mapTmdbItem(r, kind))
 }
 
 export async function getTrending(kind: TmdbKind): Promise<MediaItem[]> {
   const data = await tmdbFetch<{ results: TmdbResult[] }>(`/trending/${kind}/week`)
-  return data.results.map(r => mapTmdbItem(r, kind))
+  // /trending takes no date params — filter client-side.
+  return filterByMinYear(data.results.map(r => mapTmdbItem(r, kind)), MIN_YEAR)
 }
 
 export async function getTmdbDetails(kind: TmdbKind, id: number): Promise<MediaItem> {

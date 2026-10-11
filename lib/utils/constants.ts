@@ -2,6 +2,9 @@
 export const MEDIA_TYPES = ["movie", "anime", "manga", "book"] as const
 export type MediaType = (typeof MEDIA_TYPES)[number]
 
+/** Recency floor: nothing older than this year is ever recommended. */
+export const MIN_YEAR = 2008
+
 export const MEDIA_LABELS: Record<MediaType, string> = {
   movie: "Movie",
   anime: "Anime",

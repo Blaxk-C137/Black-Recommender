@@ -22,3 +22,8 @@ export function parseGenresParam(param: string | null | undefined): string[] {
     .map(g => g.trim())
     .filter(Boolean)
 }
+
+/** Drops items older than minYear; items with an unknown year are kept. */
+export function filterByMinYear<T extends { year: string }>(items: T[], minYear: number): T[] {
+  return items.filter(i => !i.year || Number(i.year) >= minYear)
+}

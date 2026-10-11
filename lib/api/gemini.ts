@@ -26,6 +26,7 @@ The user wants: ${mediaType} (${subType})
 Their favorite genres: ${genres.join(", ")}
 
 Recommend exactly ONE perfect title for them.
+IMPORTANT: The title MUST be released in 2008 or later — modern picks only, never old classics.
 Respond in this exact JSON format:
 {
   "title": "Title Name",

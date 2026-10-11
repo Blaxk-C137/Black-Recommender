@@ -1,5 +1,7 @@
 
 import type { MediaItem } from "@/lib/types/media.types"
+import { MIN_YEAR } from "@/lib/utils/constants"
+import { filterByMinYear } from "@/lib/utils/formatters"
 
 const BASE_URL = process.env.GOOGLE_BOOKS_BASE_URL ?? "https://www.googleapis.com/books/v1"
 
@@ -84,7 +86,7 @@ export async function getBooks(
   const res = await fetch(`${BASE_URL}/volumes?${params}`)
   if (!res.ok) throw new Error(`Google Books request failed: ${res.status}`)
   const json = (await res.json()) as { items?: GoogleVolume[] }
-  return (json.items ?? []).map(mapBookItem).filter(b => b.posterUrl)
+  return filterByMinYear((json.items ?? []).map(mapBookItem).filter(b => b.posterUrl), MIN_YEAR)
 }
 
 export async function searchBooks(query: string): Promise<MediaItem[]> {

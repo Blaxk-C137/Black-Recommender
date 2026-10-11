@@ -1,8 +1,11 @@
 
 import type { MediaItem } from "@/lib/types/media.types"
-import { stripHtml } from "@/lib/utils/formatters"
+import { MIN_YEAR } from "@/lib/utils/constants"
+import { filterByMinYear, stripHtml } from "@/lib/utils/formatters"
 
 const ANILIST_URL = process.env.ANILIST_BASE_URL ?? "https://graphql.anilist.co"
+/** AniList FuzzyDateInt: YYYYMMDD — excludes anything started before MIN_YEAR. */
+const START_DATE_GREATER = MIN_YEAR * 10000
 
 export type AniListType = "ANIME" | "MANGA"
 export type AniListSort = "SCORE_DESC" | "TRENDING_DESC" | "POPULARITY_DESC"
@@ -47,9 +50,9 @@ const FIELDS = `
 `
 
 const LIST_QUERY = `
-query ($page: Int, $perPage: Int, $type: MediaType, $sort: [MediaSort], $genres: [String], $tags: [String], $countryOfOrigin: CountryCode, $formats: [MediaFormat], $search: String) {
+query ($page: Int, $perPage: Int, $type: MediaType, $sort: [MediaSort], $genres: [String], $tags: [String], $countryOfOrigin: CountryCode, $formats: [MediaFormat], $search: String, $startDateGreater: FuzzyDateInt) {
   Page(page: $page, perPage: $perPage) {
-    media(type: $type, sort: $sort, genre_in: $genres, tag_in: $tags, countryOfOrigin: $countryOfOrigin, format_in: $formats, search: $search, isAdult: false) {
+    media(type: $type, sort: $sort, genre_in: $genres, tag_in: $tags, countryOfOrigin: $countryOfOrigin, format_in: $formats, search: $search, startDate_greater: $startDateGreater, isAdult: false) {
       ${FIELDS}
     }
   }
@@ -132,8 +135,9 @@ export async function anilistMedia(sort: AniListSort, opts: AniListQueryOpts): P
     countryOfOrigin: opts.countryOfOrigin,
     formats: opts.formats,
     search: opts.search,
+    startDateGreater: START_DATE_GREATER,
   })
-  return data.Page.media.map(m => mapAnilistItem(m, opts.type))
+  return filterByMinYear(data.Page.media.map(m => mapAnilistItem(m, opts.type)), MIN_YEAR)
 }
 
 export async function getAniListDetails(id: number, type: AniListType): Promise<MediaItem> {

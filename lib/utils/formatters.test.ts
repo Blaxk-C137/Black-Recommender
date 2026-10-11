@@ -1,6 +1,6 @@
 
 import { describe, expect, it } from "vitest"
-import { normalizeRating, parseGenresParam, stripHtml, truncate } from "./formatters"
+import { filterByMinYear, normalizeRating, parseGenresParam, stripHtml, truncate } from "./formatters"
 
 describe("normalizeRating", () => {
   it("converts a 100-scale score to /10", () => {
@@ -44,5 +44,21 @@ describe("parseGenresParam", () => {
   it("returns empty array for null/empty", () => {
     expect(parseGenresParam(null)).toEqual([])
     expect(parseGenresParam("")).toEqual([])
+  })
+})
+
+describe("filterByMinYear", () => {
+  const items = [
+    { year: "1999", title: "old" },
+    { year: "2008", title: "boundary" },
+    { year: "2024", title: "new" },
+    { year: "", title: "unknown" },
+  ]
+  it("drops items older than the floor, keeps the boundary year", () => {
+    expect(filterByMinYear(items, 2008).map(i => i.title)).toEqual([
+      "boundary",
+      "new",
+      "unknown",
+    ])
   })
 })

@@ -55,10 +55,19 @@ export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonPr
           </div>
         </div>
         {children}
-        {/* backdrop covering center, leaving only the animated ring */}
+        {/* highlight sheen */}
         <div
           className={cn(
-            "absolute [background:var(--bg)] [border-radius:var(--radius)] [inset:var(--cut)]",
+            "absolute inset-0 size-full rounded-[inherit] shadow-[inset_0_-8px_10px_#ffffff1f]",
+            "transition-all duration-300 ease-in-out",
+            "group-hover:shadow-[inset_0_-6px_10px_#ffffff3f]",
+            "group-active:shadow-[inset_0_-10px_10px_#ffffff3f]"
+          )}
+        />
+        {/* backdrop covering center, leaving only the animated ring — sits BELOW the text */}
+        <div
+          className={cn(
+            "absolute -z-20 [background:var(--bg)] [border-radius:var(--radius)] [inset:var(--cut)]",
             "transition-all duration-300 group-hover:[inset:calc(var(--cut)+1px)]"
           )}
         />

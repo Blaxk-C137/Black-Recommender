@@ -77,7 +77,8 @@ describe("anilistMedia", () => {
     expect(body.variables).toEqual({
       page: 1, perPage: 20, type: "ANIME", sort: ["SCORE_DESC"],
       genres: ["Action"], tags: undefined, countryOfOrigin: undefined,
-      formats: ["TV"], search: undefined,
+      formats: ["TV"], search: undefined, startDateGreater: 20080000,
     })
+    expect(body.query).toContain("startDate_greater: $startDateGreater")
   })
 })

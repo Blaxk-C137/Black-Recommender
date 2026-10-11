@@ -9,9 +9,15 @@ import { MediaCard } from "./MediaCard"
 export function MediaRow({
   items,
   onItemClick,
+  /** true: bleed to the page edge (default). false: stay inside the parent's padding (dialogs). */
+  bleed = true,
+  /** card width preset — "sm" suits dialogs */
+  cardSize = "md",
 }: {
   items: MediaItem[]
   onItemClick?: (item: MediaItem) => void
+  bleed?: boolean
+  cardSize?: "sm" | "md"
 }) {
   const scroller = useRef<HTMLDivElement>(null)
   const [canLeft, setCanLeft] = useState(false)
@@ -41,11 +47,18 @@ export function MediaRow({
         ref={scroller}
         onScroll={updateArrows}
         data-lenis-prevent
-        className="scrollbar-thin row-mask -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 md:-mx-6 md:px-6"
+        className={cn(
+          "scrollbar-thin row-mask flex snap-x gap-4 overflow-x-auto pb-2",
+          bleed ? "-mx-4 px-4 md:-mx-6 md:px-6" : "-mx-1 px-1"
+        )}
       >
         {items.map(item => (
           <div key={`${item.source}-${item.id}`} className="snap-start">
-            <MediaCard item={item} onClick={onItemClick ? () => onItemClick(item) : undefined} />
+            <MediaCard
+              item={item}
+              size={cardSize}
+              onClick={onItemClick ? () => onItemClick(item) : undefined}
+            />
           </div>
         ))}
       </div>
